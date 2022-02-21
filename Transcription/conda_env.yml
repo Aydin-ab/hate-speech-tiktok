@@ -1,0 +1,15 @@
+name: hate_speech_detector
+channels:
+  - defaults
+dependencies:
+  - python=3.7
+  - pip
+  - pip:
+    - wave
+    - moviepy
+    - speechrecognition
+    - pydub
+    - pytesseract
+    - opencv-python
+    - transformers
+    - torch
