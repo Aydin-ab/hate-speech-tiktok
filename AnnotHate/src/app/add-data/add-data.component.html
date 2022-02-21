@@ -1,0 +1,28 @@
+<h4>Add new data</h4>
+<form (ngSubmit)="addData()">
+    <div class="row mb-3">
+
+        <div class="col-md-6">
+            <label for="URL">URL</label>
+            <input type="text" 
+                    id="URLInput" 
+                    name="URLInput" 
+                    class="form-control" 
+                    placeholder="What is the URL of the TikTok ?"
+                    [(ngModel)]="URL"
+                    required
+            />
+        </div>
+
+    </div>
+    <button class="btn btn-primary">Add</button>
+    <div *ngIf="errorAddDataMessage" class="alert alert-danger my-3" role="alert">
+        Invalid URL. Please input a tiktok video only
+    </div>
+    <div *ngIf="successAddDataMessage" class="alert alert-success my-3" role="alert">
+        Data successfully added
+    </div>
+    <div *ngIf="infoAlreadyExistDataMessage" class="alert alert-info my-3" role="alert">
+        Data already exists
+    </div>
+</form>

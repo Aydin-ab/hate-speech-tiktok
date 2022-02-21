@@ -1,0 +1,153 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="dataset">Annot'Hate</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" 
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="dataset">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="annotation">Start Annotation (WORK IN PROGRESS)</a>
+        </li>
+        <li class="nav-item" *ngIf="user!.admin">
+          <a class="nav-link" href="admin_panel">Admin Panel</a>
+        </li>
+        <li class="nav-item"  *ngIf="isRoot">
+          <a class="nav-link" href="root_panel">Root Panel</a>
+        </li>
+      </ul>
+    </div>
+    <button class="btn btn-danger" (click)="signOut()">Sign Out </button>
+  </nav>
+
+
+
+<div name="Why Annot'Hate ?" class="my-3">
+    <h1>What is Annot'Hate</h1>
+    <p>TikTok was launched to the international market in 2017 and
+        thanks to its simple concept and GUI, it became very popular
+        especially among teenagers. <br> 
+        In effect, 
+        <a href="https://www.theverge.com/2020/4/29/21241788/tiktok-app-download-numbers-update-2-billion-users" 
+            target="_blank"> 
+            more than 2 billion downloads for the application were recorded in August 2020 
+        </a>.
+    </p>
+    <p> Unfortunately, a lot of content on TikTok includes abusive
+        language such as swear words, hate speech and racism, in
+        addition to indecent behavior. 
+        <a href="https://www.isdglobal.org/isd-publications/hatescape-an-in-depth-analysis-of-extremism-and-hate- speech-on-tiktok/."
+            target="_blank"> 
+            An in-depth analysis
+        </a> 
+        was conducted on 1030 videos, an equivalent of almost 8-hour of
+        content, and multiple aspects of extremism and hatred speech
+        were depicted. 
+    </p> 
+    <p class="lead"> <i> By definition, a <b>hate speech</b> is an abusive
+        or threatening speech or writing that expresses prejudice
+        against a particular group, especially on the basis of race, religion, or sexual orientation. </i>
+    </p>
+    <p> The overall goal of this tool by 
+        <a href="https://www.eurecom.fr/en" 
+            target="_blank">
+            Eurecom
+        </a> 
+        is to label hate speech and abusive language in the content of videos downloaded from TikTok. 
+        The label can be decided by analyzing the video content, the transcription of the audio content, 
+        and video context such as username, hashtags and video description. 
+        The focus of this tool is on the analysis of transcribed audio content.
+    </p>
+</div>
+
+<div name="How does it work ?" class="my-5">
+    <h1> How does it work ? </h1>
+    <p> Below are the data that you can help us label. 
+        The columns are simply the video and 
+        a label you can choose from 1 (not hate speech at all) and 5 (totally hate speech). <br>
+    </p>
+    <p *ngIf="user?.admin">
+        Every data present in the below table are data which have not been labelled yet or not enough (1 or 2 labels). 
+    </p>
+    <p class="lead" *ngIf="user?.admin"> <i> A data is considered <b>labelled</b> when it has been labelled by 3 different annotators. </i>
+    </p>
+    <p *ngIf="user?.admin"> 
+        All labelled data are available in a csv file in your admin panel.
+    </p>
+
+</div>
+
+<div name="What do I do ?" class="my-5">
+    <h1>What do I do ?</h1>
+    <p>It's easy. Just follow the steps :
+        <ul>
+            <li> Click on a video URL and watch the TikTok video </li>
+            <li> Choose a label between 1 (not hate speech at all) to 5 (totally hate speech) in the drop down list box</li>
+            <li> Click on the Submit button to submit your choice. You cannot submit more than once a video </li>
+        </ul>
+
+    <p> If you'd like to suggest videos to be added, 
+        please send an e-mail to <i> gilbert.badaro@gmail.com </i> with access to your recommandations. <br>
+        Thank you for supporting us !
+    </p>
+</div>
+
+<div name="Example" class="my-5">
+    <h1>Examples</h1>
+    <p> Example of labelling video contents. 
+        Of course it might depends on your sensitivity but make sure that 1 means no hate speech at all
+         and 5 means that it can't be more hateful
+    </p>
+    <ul>
+        <li>"OMG I love you all" : <i><b>1</b></i>. Because this is not hate speech at all</li>
+        <li>"I don't trust black people, they are very violent..." : <i><b>3</b></i>. This is offensive toward a group of people</li>
+        <li>"F*ckin ni**** and jews, I wish we could exterminate all these fag***" : <i><b>5</b></i>. This is highly hateful </li>
+    </ul>
+
+</div>
+
+<div name="datase table" class="my-3">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>URL</th>
+                <th>label</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor= "let data of displayDataset">
+                <td><a href="{{data.URL}}" target="_blank">{{data.videoID}}</a></td>
+                <td>
+                    <form onsubmit="return false">
+                        <div class="row mb-3">
+                            <div class="col-sm">Select Label :</div>
+                            <div class="col-sm">
+                                <div class="form-group">
+                                    <select class="form-control" 
+                                            id="label+{{data.URL}}"
+                                            name="label+{{data.URL}}"
+                                            style="width:auto;">
+                                    <option value="0"></option>
+                                    <option value="1">1 (not Hate Speech at all)</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5 (totally Hate Speech)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" id="btn+{{data.URL}}" class="btn btn-primary" (click)="addLabel(data)">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

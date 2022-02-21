@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="dataset">Annot'Hate</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" 
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="dataset">Home </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="annotation">Start Annotation (WORK IN PROGRESS)</a>
+        </li>
+        <li class="nav-item" *ngIf="user!.admin">
+          <a class="nav-link" href="admin_panel">Admin Panel</a>
+        </li>
+        <li class="nav-item"  *ngIf="isRoot">
+          <a class="nav-link" href="root_panel">Root Panel</a>
+        </li>
+      </ul>
+    </div>
+    <button class="btn btn-danger" (click)="signOut()">Sign Out </button>
+</nav>
+
+<div class="row my-5">
+    <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@hinateaanigo/video/7056600331530046726" data-video-id="7056600331530046726" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@hinateaanigo" href="https://www.tiktok.com/@hinateaanigo">@hinateaanigo</a> <a title="pourtoi" target="_blank" href="https://www.tiktok.com/tag/pourtoi">#pourtoi</a> <a title="pov" target="_blank" href="https://www.tiktok.com/tag/pov">#pov</a> <a target="_blank" title="♬ son original - Natéa Anigo" href="https://www.tiktok.com/music/son-original-7056600271355071237">♬ son original - Natéa Anigo</a> </section> </blockquote> <script async src="https://www.tiktok.com/embed.js"></script>
+    <div class="col-md-auto">
+        <div class="form-group">
+            <select class="form-control" 
+                    id="label"
+                    name="label"
+                    style="width:auto;">
+            <option value="0"></option>
+            <option value="1">1 (not Hate Speech at all)</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5 (totally Hate Speech)</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-auto">
+        <button type="button" id="btn" class="btn btn-primary">Submit</button>
+    </div>
+</div>

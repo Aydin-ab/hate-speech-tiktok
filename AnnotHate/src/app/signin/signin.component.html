@@ -1,0 +1,22 @@
+<div class="text-center">
+
+    <div class="mb-5">
+        <h1>Annot'Hate by Eurecom</h1>
+        <div class="lead">
+            <p >Help us building a reliable hate speech dataset for Machine Learning</p>
+            <p class="text-muted">Annot'Hate is an hate speech annotation tool for TikTok video and audio </p>
+        </div>
+        <img 
+            style= "width: 70%"
+            src="https://firebasestorage.googleapis.com/v0/b/hatespeech-fcea2.appspot.com/o/hate-speech-dices.jpeg?alt=media&token=40a51477-bd50-4637-ae99-528b11247bec" 
+            alt="log in image"
+        />
+    </div>
+
+    <div *ngIf="errorAnnotatorMessage" class="alert alert-warning" role="alert">
+        Only validated annotators are allowed to sign in.
+    </div>
+
+    <button class="btn btn-info" (click)="signInWithGoogle()">Sign in with Google</button>
+
+</div>

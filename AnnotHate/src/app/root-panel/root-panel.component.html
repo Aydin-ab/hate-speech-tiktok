@@ -1,0 +1,81 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="dataset">Annot'Hate</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" 
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="dataset">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="annotation">Start Annotation (WORK IN PROGRESS)</a>
+        </li>
+        <li class="nav-item" *ngIf="user!.admin">
+          <a class="nav-link" href="admin_panel">Admin Panel</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="root_panel">Root Panel</a>
+        </li>
+      </ul>
+    </div>
+    <button class="btn btn-danger" (click)="signOut()">Sign Out </button>
+  </nav>
+
+
+
+<div name="What is Root Panel">
+    <h1> Root Panel </h1>
+    <p> Here you can manage the admins </p>
+</div>
+
+
+<div name="Table of admins">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <td>Admin Name</td>
+                <td>Delete</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let admin of admins">
+                <td>{{admin.displayName}}</td>
+                    <td><button type="button" class="btn btn-danger" (click)="deleteAdmin(admin)">Delete</button>
+                    </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div name="Add admin">
+    <h4>Add new Admin</h4>
+    Add the e-mail of the annotator you'd like to promote admin
+    <form (ngSubmit)="addAdmin()">
+      <div class="input-group mb-3">
+        <div class="form-group">
+          <input type="text" 
+                  list="staticUserIds"    
+                  id="emailInput" 
+                  name="emailInput" 
+                  class="form-control" 
+                  placeholder="e-mail ?"
+                  [(ngModel)]="addAdminEmail"
+                  required
+          />
+          <datalist id="staticUserIds">
+            <option *ngFor="let user of annotatorsOnly">{{user.email}}</option>
+          </datalist>
+        </div>
+        <div class="input-group-append">
+          <button class="btn btn-primary mx-1">Add</button>
+        </div>
+      </div>
+    </form>
+    <div *ngIf="notSignedInYetMessage" class="alert alert-warning" role="alert">
+      User need to sign in before being promoted to admin
+    </div>
+</div>
+

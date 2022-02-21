@@ -1,0 +1,164 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="dataset">Annot'Hate</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" 
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="dataset">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="annotation">Start Annotation (WORK IN PROGRESS)</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="admin_panel">Admin Panel</a>
+        </li>
+        <li class="nav-item"  *ngIf="isRoot">
+          <a class="nav-link" href="root_panel">Root Panel</a>
+        </li>
+      </ul>
+    </div>
+    <button class="btn btn-danger" (click)="signOut()">Sign Out </button>
+  </nav>
+
+<div name="Table of annotators" class="my-3">
+  <div class="my-3">
+    <h1>Table of annotators</h1>
+  </div>
+  <table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <td>Annotator Name</td>
+            <td>Delete</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users">
+            <td>{{user.displayName}}</td>
+                <td><button type="button" 
+                            class="btn btn-danger" 
+                            (click)="deleteAnnotator(user)"
+                            *ngIf="!user.admin">Delete</button>
+                </td>
+        </tr>
+    </tbody>
+  </table>
+</div>
+
+<div name="Add annotators">
+  <h4>Add new Annotators</h4>
+  <form (ngSubmit)="addAnnotator()">
+    Simply put the e-mail of the annotator. If the user has never logged in, the table will update after his first login
+    <div class="input-group mb-3">
+      <div class="form-group">
+        <input type="text" 
+                  id="emailInput" 
+                  name="emailInput" 
+                  class="form-control" 
+                  placeholder="e-mail of annotator"
+                  [(ngModel)]="addAnnotatorEmail"
+                  required
+          />
+      </div>
+      <div class="input-group-append">
+        <button class="btn btn-primary mx-1">Add</button>
+      </div>
+    </div>
+  </form>
+  <div *ngIf="errorAlreadyAnnotatorMessage" class="alert alert-warning" role="alert">
+    User is already an annotator
+  </div>
+  <div *ngIf="successAddAnnotatorMessage" class="alert alert-success" role="alert">
+    User is now an annotator. If he has never logged in, table will update after his first login
+  </div>
+</div>
+
+<div name="Track annotators">
+  <h1>Track annotators</h1>
+  <p> Here you can track the activity of annotators (who labelled what) </p>
+
+  <div name="How it works" class="my-3">
+      Simply type the name or search through the list and press the "Search" button
+  </div>
+  <div class="input-group mb-3">
+      <div class="form-group">
+          <input class="form-control" type="text" list="staticUserIds" id="selectedUserName" [(ngModel)]="selectedUserName"/>
+          <datalist id="staticUserIds">
+            <option *ngFor="let user of users">{{user.displayName}}</option>
+          </datalist>
+      </div>
+      <div class="input-group-append">
+        <button class='btn btn-primary pull-left mx-1' (click)="displayTrack()">Search</button>
+      </div>
+  </div>
+
+  <div *ngIf="trackData.length > 0">
+      <table class="table table-bordered table-striped">
+          <thead>
+              <tr>
+                  <td>URL</td>
+                  <td>Label</td>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let data of trackData">
+                  <td><a href="{{data[0]}}">{{data[1]}}</a></td>
+                  <td>{{data[2]}}</td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+
+  <div *ngIf="trackData.length == 0 && !init" class="alert alert-warning" role="alert">
+      This user has not annotated any videos yet
+  </div>
+
+</div>
+
+
+<div name="Track annotations" class="my-3">
+  <h1>Track annotations</h1>
+  <p> Here you can track the annotations progress of the datasets. 
+    Only the data not fully labelled yet is displayed.
+   A data is considered labelled when it has been labelled by 3 different annotators</p>
+
+  <div name="dataset table" class="my-3">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>URL</th>
+                <th>label 1</th>
+                <th>label 2</th>
+                <th>label 3</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor= "let data of dataset">
+                <td><a href="{{data.URL}}" target="_blank">{{data.videoID}}</a></td>
+                <td>{{data.label1}}</td>
+                <td>{{data.label2}}</td>
+                <td>{{data.label3}}</td>
+            </tr>
+        </tbody>
+    </table>
+  </div>
+</div>
+
+<div name="add data">
+  <app-add-data></app-add-data>
+</div>
+
+<div name="Download" class="my-5" *ngIf="user?.admin">
+  <h3>Download labelled dataset so far</h3>
+  <p>You can download the labelled dataset so far below</p>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <button class="btn btn-primary" (click)="downloadCSV()"><i class="fa fa-download"></i> Download</button>
+
+</div>
+
+
